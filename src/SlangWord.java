@@ -1,0 +1,5 @@
+
+public class SlangWord {
+	public String slang;
+	public String definition;
+}
