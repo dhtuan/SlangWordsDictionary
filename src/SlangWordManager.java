@@ -37,4 +37,17 @@ public class SlangWordManager {
 		
 		return null;
 	}
+	
+	public SlangWord SearchByDefinition(String definition)
+	{
+		for(int i = 0; i < SlangWords.size(); i++)
+		{
+			if(SlangWords.get(i).definition.contains(definition))
+			{
+				return SlangWords.get(i);
+			}
+		}
+		
+		return null;
+	}
 }
