@@ -1,8 +1,16 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		
+		SlangWordManager swm = new SlangWordManager();
+	
+		swm.ReadFile();
+		
+		System.out.println(swm.SlangWords.size());
+		
 		Scanner scanner;
 		int option;
 		
