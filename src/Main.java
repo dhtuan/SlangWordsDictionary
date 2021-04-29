@@ -38,7 +38,19 @@ public class Main {
 			switch(option)
 			{
 				case 1:
-					System.out.println("1.");
+					String keyword;
+					System.out.println("1. Enter slang to search:");
+					scanner = new Scanner(System.in);
+					keyword = scanner.nextLine();
+					SlangWord result = swm.SearchBySlangWord(keyword);
+					if(result != null)
+					{
+						System.out.println(result.slang + " : " + result.definition);
+					}
+					else
+					{
+						System.out.println("No result");
+					}
 					break;
 					
 				case 2:

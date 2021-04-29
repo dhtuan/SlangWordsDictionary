@@ -14,7 +14,7 @@ public class SlangWordManager {
 			BufferedReader reader = new BufferedReader(new FileReader("slang.txt"));
 			String row;
 			while ((row = reader.readLine()) != null) {
-				System.out.println(row);
+				//System.out.println(row);
 			    String[] data = row.split("`");
 			    
 			    SlangWord newOne = new SlangWord(data[0], data[1]);
@@ -23,5 +23,18 @@ public class SlangWordManager {
 			reader.close();
 			System.out.println("Success on reading file");
 		}
+	}
+	
+	public SlangWord SearchBySlangWord(String slang)
+	{
+		for(int i = 0; i < SlangWords.size(); i++)
+		{
+			if(SlangWords.get(i).slang.equals(slang))
+			{
+				return SlangWords.get(i);
+			}
+		}
+		
+		return null;
 	}
 }
