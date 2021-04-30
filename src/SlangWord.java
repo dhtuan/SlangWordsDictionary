@@ -10,4 +10,9 @@ public class SlangWord {
 		slang = s;
 		definition = d;
 	}
+	
+	public String ToString()
+	{
+		return slang + "`" + definition + "\n";
+	}
 }

@@ -75,7 +75,19 @@ public class Main {
 					break;
 					
 				case 4:
-					System.out.println("4.");
+					System.out.println("4. New slang word");
+					
+					String newSlangWord;
+					System.out.println("Slang:");
+					scanner = new Scanner(System.in);
+					newSlangWord = scanner.nextLine();
+					
+					String definition;
+					System.out.println("Definition:");
+					scanner = new Scanner(System.in);
+					definition = scanner.nextLine();
+					
+					swm.Add(newSlangWord, definition);
 					break;
 					
 				case 5:
