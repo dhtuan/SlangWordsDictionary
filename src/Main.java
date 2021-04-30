@@ -91,7 +91,12 @@ public class Main {
 					break;
 					
 				case 5:
-					System.out.println("5.");
+					System.out.println("5. Edit slang word");
+					String editWord;
+					System.out.println("Slang:");
+					scanner = new Scanner(System.in);
+					editWord = scanner.nextLine();
+					swm.Edit(editWord);
 					break;
 					
 				case 6:

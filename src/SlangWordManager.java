@@ -132,4 +132,25 @@ public class SlangWordManager {
 		}
 		return -1;
 	}
+	
+	public void Edit(String slang) throws IOException
+	{
+		int existedIndex = IsExisted(slang);
+		if(existedIndex == -1)
+		{
+			System.out.println("Slang word is not existed");
+			return;
+		}
+		
+		SlangWord word = SlangWords.get(existedIndex);
+		
+		System.out.println("Slang: " + word.slang);
+		System.out.println("New definition: ");
+		scanner = new Scanner(System.in);
+		word.definition = scanner.nextLine();
+		WriteFile();
+		ReadFile();
+		System.out.println("Edited successfully");
+		
+	}
 }
