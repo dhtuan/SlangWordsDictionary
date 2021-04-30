@@ -21,33 +21,46 @@ public class SlangWordManager {
 			    SlangWords.add(newOne);
 			}
 			reader.close();
-			System.out.println("Success on reading file");
+			//System.out.println("Success on reading file");
 		}
 	}
 	
-	public SlangWord SearchBySlangWord(String slang)
+	public void PrintList(ArrayList<SlangWord> l)
 	{
-		for(int i = 0; i < SlangWords.size(); i++)
+		for(int i = 0; i < l.size(); i++)
 		{
-			if(SlangWords.get(i).slang.equals(slang))
-			{
-				return SlangWords.get(i);
-			}
+			SlangWord word = l.get(i);
+			System.out.println(word.slang + " : " + word.definition);
 		}
-		
-		return null;
 	}
 	
-	public SlangWord SearchByDefinition(String definition)
+	public ArrayList<SlangWord> SearchBySlangWord(String slang)
 	{
+		ArrayList<SlangWord> results = new ArrayList<SlangWord>();
+		
 		for(int i = 0; i < SlangWords.size(); i++)
 		{
-			if(SlangWords.get(i).definition.contains(definition))
+			SlangWord word = SlangWords.get(i);
+			if(word.slang.contains(slang))
 			{
-				return SlangWords.get(i);
+				results.add(word);
+			}
+		}		
+		return results;
+	}
+	
+	public ArrayList<SlangWord> SearchByDefinition(String definition)
+	{
+		ArrayList<SlangWord> results = new ArrayList<SlangWord>();
+		
+		for(int i = 0; i < SlangWords.size(); i++)
+		{
+			SlangWord word = SlangWords.get(i);
+			if(word.definition.contains(definition))
+			{
+				results.add(word);
 			}
 		}
-		
-		return null;
+		return results;
 	}
 }

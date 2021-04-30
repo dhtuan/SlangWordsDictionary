@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -7,9 +8,8 @@ public class Main {
 		
 		SlangWordManager swm = new SlangWordManager();
 	
-		swm.ReadFile();
-		
-		System.out.println(swm.SlangWords.size());
+		swm.ReadFile();		
+		//System.out.println(swm.SlangWords.size());
 		
 		Scanner scanner;
 		int option;
@@ -42,10 +42,11 @@ public class Main {
 					System.out.println("1. Enter slang to search:");
 					scanner = new Scanner(System.in);
 					slangWordSearchKey = scanner.nextLine();
-					SlangWord slangWordSearchResult = swm.SearchBySlangWord(slangWordSearchKey);
-					if(slangWordSearchResult != null)
+					ArrayList<SlangWord> slangWordSearchResults = swm.SearchBySlangWord(slangWordSearchKey);
+					if(!slangWordSearchResults.isEmpty())
 					{
-						System.out.println(slangWordSearchResult.slang + " : " + slangWordSearchResult.definition);
+						System.out.println("Result:");
+						swm.PrintList(slangWordSearchResults);
 					}
 					else
 					{
@@ -58,10 +59,10 @@ public class Main {
 					System.out.println("2. Enter definition to search:");
 					scanner = new Scanner(System.in);
 					definitionSearchKey = scanner.nextLine();
-					SlangWord definitionSearchResult = swm.SearchByDefinition(definitionSearchKey);
-					if(definitionSearchResult != null)
+					ArrayList<SlangWord> definitionSearchResults = swm.SearchByDefinition(definitionSearchKey);
+					if(!definitionSearchResults.isEmpty())
 					{
-						System.out.println(definitionSearchResult.slang + " : " + definitionSearchResult.definition);
+						swm.PrintList(definitionSearchResults);
 					}
 					else
 					{
