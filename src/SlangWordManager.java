@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class SlangWordManager {
@@ -166,5 +167,11 @@ public class SlangWordManager {
 		WriteFile();
 		ReadFile();
 		System.out.println("Deleted successfully");	
+	}
+	
+	public SlangWord RandomSlangWord()
+	{
+		Random r = new Random();
+		return SlangWords.get(r.nextInt(SlangWords.size()));
 	}
 }

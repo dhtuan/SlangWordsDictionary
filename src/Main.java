@@ -113,7 +113,9 @@ public class Main {
 					break;
 					
 				case 8:
-					System.out.println("8.");
+					System.out.println("8. Random slang word");
+					SlangWord randomWord = swm.RandomSlangWord();
+					System.out.println(randomWord.slang + " : " + randomWord.definition);
 					break;
 					
 				case 9:
