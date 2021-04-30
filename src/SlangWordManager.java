@@ -150,7 +150,21 @@ public class SlangWordManager {
 		word.definition = scanner.nextLine();
 		WriteFile();
 		ReadFile();
-		System.out.println("Edited successfully");
+		System.out.println("Edited successfully");		
+	}
+	
+	public void Delete(String slang) throws IOException
+	{
+		int existedIndex = IsExisted(slang);
+		if(existedIndex == -1)
+		{
+			System.out.println("Slang word is not existed");
+			return;
+		}
 		
+		SlangWords.remove(existedIndex);
+		WriteFile();
+		ReadFile();
+		System.out.println("Deleted successfully");	
 	}
 }

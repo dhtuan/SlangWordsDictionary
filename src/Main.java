@@ -100,7 +100,12 @@ public class Main {
 					break;
 					
 				case 6:
-					System.out.println("6.");
+					System.out.println("6. Delete slang word");
+					String deleteWord;
+					System.out.println("Slang:");
+					scanner = new Scanner(System.in);
+					deleteWord = scanner.nextLine();
+					swm.Delete(deleteWord);
 					break;
 					
 				case 7:
