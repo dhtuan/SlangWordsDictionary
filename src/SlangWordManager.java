@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -71,7 +72,7 @@ public class SlangWordManager {
 		for(int i = 0; i < SlangWords.size(); i++)
 		{
 			SlangWord word = SlangWords.get(i);
-			if(word.definition.contains(definition))
+			if(word.definition.toLowerCase().contains(definition.toLowerCase()))
 			{
 				results.add(word);
 			}
@@ -173,5 +174,41 @@ public class SlangWordManager {
 	{
 		Random r = new Random();
 		return SlangWords.get(r.nextInt(SlangWords.size()));
+	}
+	
+	public void GuessDefinitionGame()
+	{
+		int choose;
+		SlangWord question = RandomSlangWord();
+		ArrayList<SlangWord> answers = new ArrayList<SlangWord>();
+		
+		answers.add(question);
+		
+		for(int i = 0; i < 3; i++)
+		{
+			answers.add(RandomSlangWord());
+		}
+		
+		Collections.shuffle(answers);
+		
+		System.out.println("Slang: " + question.slang + "?\n");
+		
+		for(int i = 0; i < answers.size(); i++)
+		{
+			System.out.println((i+1) + ". " + answers.get(i).definition);
+		}
+		
+		System.out.println("\nAnswer: ");
+		scanner = new Scanner(System.in);
+		choose = scanner.nextInt();
+		
+		if(answers.get(choose - 1).equals(question))
+		{
+			System.out.println("Correct!! " + question.slang + " : " + question.definition);
+		}
+		else
+		{
+			System.out.println("Wrong answer!! " + question.slang + " : " + question.definition);
+		}
 	}
 }

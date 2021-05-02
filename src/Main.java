@@ -119,7 +119,8 @@ public class Main {
 					break;
 					
 				case 9:
-					System.out.println("9.");
+					System.out.println("9. Guess the definition game");
+					swm.GuessDefinitionGame();
 					break;
 					
 				case 10:
