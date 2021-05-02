@@ -5,6 +5,7 @@ $_$`Has money
 %)`Drunk| giddy
 &`And
 &APOS;S`Wrongly displayed 's
+><`Frustration
 >,<`Angry| annoyed
 >.>`Suspicious| wary
 >.<`Frustrated| angry| upset| in pain
@@ -7652,7 +7653,5 @@ ZZZ`Sleepy| bored| tired
 |O|`LOL
 }:-)`Devilish smile
 ~`Denotes Sarcasm| Put At The End Of A Word To Make It Longer
-ý`Registered Trademark Symbol
-ý`Trademark
-hjhj`hihi
-><`jjjjj
+Æ`Registered Trademark Symbol
+ô`Trademark

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -15,8 +16,8 @@ public class SlangWordManager {
 	public static final String baseSlangPath = "baseSlang.txt";
 	public static final String slangPath = "slang.txt";
 	
-	ArrayList<SlangWord> baseList = new ArrayList<SlangWord>();
-	ArrayList<SlangWord> SlangWords = new ArrayList<SlangWord>();
+	LinkedHashSet<SlangWord> baseList = new LinkedHashSet<SlangWord>(); //use Set to avoid duplication, store unique SlangWord
+	LinkedHashSet<SlangWord> SlangWords = new LinkedHashSet<SlangWord>(); //LinkedHashSet for ordering
 	
 	ArrayList<SearchHistory> searchHistory = new ArrayList<SearchHistory>();
 	
@@ -30,7 +31,7 @@ public class SlangWordManager {
 		ReadFile(SlangWordManager.slangPath, SlangWords);
 	}
 	
-	public void ReadFile(String path, ArrayList<SlangWord> listToAdd) throws IOException
+	public void ReadFile(String path, LinkedHashSet<SlangWord> listToAdd) throws IOException
 	{
 		listToAdd.clear();
 		File f = new File(path);
@@ -47,14 +48,19 @@ public class SlangWordManager {
 		}
 	}
 	
-	public void WriteFile(String path, ArrayList<SlangWord> listToSave) throws IOException
+	public void WriteFile(String path, LinkedHashSet<SlangWord> listToSave) throws IOException
 	{
 		DataOutputStream dos = new DataOutputStream(new FileOutputStream(path));
 		
-		for(int i = 0; i < listToSave.size(); i++)
+		for(SlangWord sw : listToSave)
 		{
-			dos.writeBytes(listToSave.get(i).ToStringEndLine());
-		}	
+			dos.writeBytes(sw.ToStringEndLine());
+		}
+		
+//		for(int i = 0; i < listToSave.size(); i++)
+//		{
+//			dos.writeBytes(listToSave.get(i).ToStringEndLine());
+//		}	
 		dos.close();
 	}
 	
@@ -71,14 +77,23 @@ public class SlangWordManager {
 	{
 		ArrayList<SlangWord> results = new ArrayList<SlangWord>();
 		
-		for(int i = 0; i < SlangWords.size(); i++)
+		for(SlangWord sw : SlangWords)
 		{
-			SlangWord word = SlangWords.get(i);
+			SlangWord word = sw;
 			if(word.slang.contains(slang.trim()))
 			{
 				results.add(word);
 			}
 		}
+		
+//		for(int i = 0; i < SlangWords.size(); i++)
+//		{
+//			SlangWord word = SlangWords.get(i);
+//			if(word.slang.contains(slang.trim()))
+//			{
+//				results.add(word);
+//			}
+//		}
 		searchHistory.add(new SearchHistory(slang, results, LocalDateTime.now()));
 		return results;
 	}
@@ -87,22 +102,31 @@ public class SlangWordManager {
 	{
 		ArrayList<SlangWord> results = new ArrayList<SlangWord>();
 		
-		for(int i = 0; i < SlangWords.size(); i++)
+		for(SlangWord sw : SlangWords)
 		{
-			SlangWord word = SlangWords.get(i);
+			SlangWord word = sw;
 			if(word.definition.toLowerCase().contains(definition.trim().toLowerCase()))
 			{
 				results.add(word);
 			}
 		}
+		
+//		for(int i = 0; i < SlangWords.size(); i++)
+//		{
+//			SlangWord word = SlangWords.get(i);
+//			if(word.definition.toLowerCase().contains(definition.trim().toLowerCase()))
+//			{
+//				results.add(word);
+//			}
+//		}
 		searchHistory.add(new SearchHistory(definition, results, LocalDateTime.now()));
 		return results;
 	}
 	
 	public void Add(String slang, String definition) throws IOException
 	{		
-		int existedIndex = IsExisted(slang);
-		if(existedIndex != -1)
+		SlangWord existedWord = IsExisted(slang);
+		if(existedWord != null)
 		{
 			int option;
 			
@@ -119,7 +143,7 @@ public class SlangWordManager {
 			switch(option)
 			{
 				case 1:
-					SlangWords.get(existedIndex).definition = definition;
+					existedWord.definition = definition;
 					WriteFile(slangPath, SlangWords);
 					ReadFile(slangPath, SlangWords);
 					System.out.println("Overwrited successfully");
@@ -142,33 +166,40 @@ public class SlangWordManager {
 		System.out.println("Added successfully");
 	}
 	
-	public int IsExisted(String slang)
+	public SlangWord IsExisted(String slang)
 	{
-		for(int i = 0; i < SlangWords.size(); i++)
+		for(SlangWord sw : SlangWords)
 		{
-			if(SlangWords.get(i).slang.equals(slang))
+			if(sw.slang.equals(slang))
 			{
-				return i;
+				return sw;
 			}
 		}
-		return -1;
+//		for(int i = 0; i < SlangWords.size(); i++)
+//		{
+//			if(SlangWords.get(i).slang.equals(slang))
+//			{
+//				return i;
+//			}
+//		}
+		return null;
 	}
 	
 	public void Edit(String slang) throws IOException
 	{
-		int existedIndex = IsExisted(slang);
-		if(existedIndex == -1)
+		SlangWord existedWord = IsExisted(slang);
+		if(existedWord == null)
 		{
 			System.out.println("Slang word is not existed");
 			return;
 		}
 		
-		SlangWord word = SlangWords.get(existedIndex);
+		//SlangWord word = SlangWords.get(existedIndex);
 		
-		System.out.println("Slang: " + word.slang);
+		System.out.println("Slang: " + existedWord.slang);
 		System.out.println("New definition: ");
 		scanner = new Scanner(System.in);
-		word.definition = scanner.nextLine();
+		existedWord.definition = scanner.nextLine();
 		WriteFile(slangPath, SlangWords);
 		ReadFile(slangPath, SlangWords);
 		System.out.println("Edited successfully");		
@@ -176,8 +207,8 @@ public class SlangWordManager {
 	
 	public void Delete(String slang) throws IOException
 	{
-		int existedIndex = IsExisted(slang);
-		if(existedIndex == -1)
+		SlangWord existedWord = IsExisted(slang);
+		if(existedWord == null)
 		{
 			System.out.println("Slang word is not existed");
 			return;
@@ -193,7 +224,7 @@ public class SlangWordManager {
 		switch(option)
 		{
 			case 1:
-				SlangWords.remove(existedIndex);
+				SlangWords.remove(existedWord);
 				WriteFile(slangPath, SlangWords);
 				ReadFile(slangPath, SlangWords);
 				System.out.println("Deleted successfully");
@@ -208,7 +239,7 @@ public class SlangWordManager {
 	public SlangWord RandomSlangWord()
 	{
 		Random r = new Random();
-		return SlangWords.get(r.nextInt(SlangWords.size()));
+		return (SlangWord) SlangWords.toArray()[r.nextInt(SlangWords.size())];//.get(r.nextInt(SlangWords.size()));
 	}
 	
 	public void Quiz(boolean guessDefinition)
@@ -258,10 +289,11 @@ public class SlangWordManager {
 		}
 	}
 	
-	public void Reset()
+	public void Reset() throws IOException
 	{
 		SlangWords.clear();
 		SlangWords = baseList;
+		WriteFile(SlangWordManager.slangPath, SlangWords);
 	}
 	
 	public void ShowSearchHistories()
