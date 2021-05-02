@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -29,7 +28,6 @@ public class SlangWordManager {
 	{
 		ReadFile(SlangWordManager.baseSlangPath, baseList);
 		ReadFile(SlangWordManager.slangPath, SlangWords);
-
 	}
 	
 	public void ReadFile(String path, ArrayList<SlangWord> listToAdd) throws IOException
@@ -274,7 +272,7 @@ public class SlangWordManager {
 			return;
 		}
 		
-		for(int i = 0; i < searchHistory.size(); i++)
+		for(int i = searchHistory.size() - 1; i >= 0; i--)
 		{
 			searchHistory.get(i).Show();
 			System.out.println();
