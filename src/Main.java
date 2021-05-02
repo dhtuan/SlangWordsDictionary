@@ -70,7 +70,8 @@ public class Main {
 					break;
 					
 				case 3:
-					System.out.println("3.");
+					System.out.println("3. Show search history");
+					swm.ShowSearchHistories();
 					break;
 					
 				case 4:

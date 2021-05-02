@@ -11,8 +11,13 @@ public class SlangWord {
 		definition = d;
 	}
 	
-	public String ToString()
+	public String ToStringEndLine()
 	{
 		return slang + "`" + definition + "\n";
+	}
+	
+	public String ToString()
+	{
+		return slang + "`" + definition;
 	}
 }

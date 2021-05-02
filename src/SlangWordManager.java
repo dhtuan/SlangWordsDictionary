@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -16,7 +17,12 @@ public class SlangWordManager {
 	
 	ArrayList<SlangWord> baseList = new ArrayList<SlangWord>();
 	ArrayList<SlangWord> SlangWords = new ArrayList<SlangWord>();
+	
+	ArrayList<SearchHistory> searchHistory = new ArrayList<SearchHistory>();
+	
 	Scanner scanner;
+	
+	//dictionary iterator java
 	
 	public void Init() throws IOException
 	{
@@ -48,7 +54,7 @@ public class SlangWordManager {
 		
 		for(int i = 0; i < listToSave.size(); i++)
 		{
-			dos.writeBytes(listToSave.get(i).ToString());
+			dos.writeBytes(listToSave.get(i).ToStringEndLine());
 		}	
 		dos.close();
 	}
@@ -73,7 +79,8 @@ public class SlangWordManager {
 			{
 				results.add(word);
 			}
-		}		
+		}
+		searchHistory.add(new SearchHistory(slang, results, LocalDateTime.now()));
 		return results;
 	}
 	
@@ -89,6 +96,7 @@ public class SlangWordManager {
 				results.add(word);
 			}
 		}
+		searchHistory.add(new SearchHistory(definition, results, LocalDateTime.now()));
 		return results;
 	}
 	
@@ -239,5 +247,20 @@ public class SlangWordManager {
 	{
 		SlangWords.clear();
 		SlangWords = baseList;
+	}
+	
+	public void ShowSearchHistories()
+	{
+		if(searchHistory.isEmpty())
+		{
+			System.out.println("Search history is empty!");
+			return;
+		}
+		
+		for(int i = 0; i < searchHistory.size(); i++)
+		{
+			searchHistory.get(i).Show();
+			System.out.println();
+		}
 	}
 }
