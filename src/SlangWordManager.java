@@ -10,33 +10,45 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class SlangWordManager {
+	
+	public static final String baseSlangPath = "baseSlang.txt";
+	public static final String slangPath = "slang.txt";
+	
+	ArrayList<SlangWord> baseList = new ArrayList<SlangWord>();
 	ArrayList<SlangWord> SlangWords = new ArrayList<SlangWord>();
 	Scanner scanner;
 	
-	public void ReadFile() throws IOException
+	public void Init() throws IOException
 	{
-		SlangWords.clear();
-		File f = new File("slang.txt");
+		ReadFile(SlangWordManager.baseSlangPath, baseList);
+		ReadFile(SlangWordManager.slangPath, SlangWords);
+
+	}
+	
+	public void ReadFile(String path, ArrayList<SlangWord> listToAdd) throws IOException
+	{
+		listToAdd.clear();
+		File f = new File(path);
 		if (f.isFile()) {
-			BufferedReader reader = new BufferedReader(new FileReader("slang.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader(path));
 			String row;
 			while ((row = reader.readLine()) != null) {
 			    String[] data = row.split("`");
 			    
 			    SlangWord newOne = new SlangWord(data[0], data[1]);
-			    SlangWords.add(newOne);
+			    listToAdd.add(newOne);
 			}
 			reader.close();
 		}
 	}
 	
-	public void WriteFile() throws IOException
+	public void WriteFile(String path, ArrayList<SlangWord> listToSave) throws IOException
 	{
-		DataOutputStream dos = new DataOutputStream(new FileOutputStream("slang.txt"));
+		DataOutputStream dos = new DataOutputStream(new FileOutputStream(path));
 		
-		for(int i = 0; i < SlangWords.size(); i++)
+		for(int i = 0; i < listToSave.size(); i++)
 		{
-			dos.writeBytes(SlangWords.get(i).ToString());
+			dos.writeBytes(listToSave.get(i).ToString());
 		}	
 		dos.close();
 	}
@@ -57,7 +69,7 @@ public class SlangWordManager {
 		for(int i = 0; i < SlangWords.size(); i++)
 		{
 			SlangWord word = SlangWords.get(i);
-			if(word.slang.contains(slang))
+			if(word.slang.contains(slang.trim()))
 			{
 				results.add(word);
 			}
@@ -72,7 +84,7 @@ public class SlangWordManager {
 		for(int i = 0; i < SlangWords.size(); i++)
 		{
 			SlangWord word = SlangWords.get(i);
-			if(word.definition.toLowerCase().contains(definition.toLowerCase()))
+			if(word.definition.toLowerCase().contains(definition.trim().toLowerCase()))
 			{
 				results.add(word);
 			}
@@ -101,8 +113,8 @@ public class SlangWordManager {
 			{
 				case 1:
 					SlangWords.get(existedIndex).definition = definition;
-					WriteFile();
-					ReadFile();
+					WriteFile(slangPath, SlangWords);
+					ReadFile(slangPath, SlangWords);
 					System.out.println("Overwrited successfully");
 					return;
 					
@@ -118,8 +130,8 @@ public class SlangWordManager {
 		
 		SlangWord newWord = new SlangWord(slang, definition);
 		SlangWords.add(newWord);
-		WriteFile();
-		ReadFile();
+		WriteFile(slangPath, SlangWords);
+		ReadFile(slangPath, SlangWords);
 		System.out.println("Added successfully");
 	}
 	
@@ -150,8 +162,8 @@ public class SlangWordManager {
 		System.out.println("New definition: ");
 		scanner = new Scanner(System.in);
 		word.definition = scanner.nextLine();
-		WriteFile();
-		ReadFile();
+		WriteFile(slangPath, SlangWords);
+		ReadFile(slangPath, SlangWords);
 		System.out.println("Edited successfully");		
 	}
 	
@@ -165,8 +177,8 @@ public class SlangWordManager {
 		}
 		
 		SlangWords.remove(existedIndex);
-		WriteFile();
-		ReadFile();
+		WriteFile(slangPath, SlangWords);
+		ReadFile(slangPath, SlangWords);
 		System.out.println("Deleted successfully");	
 	}
 	
@@ -221,5 +233,11 @@ public class SlangWordManager {
 		{
 			System.out.println("Wrong answer!! " + question.slang + " : " + question.definition);
 		}
+	}
+	
+	public void Reset()
+	{
+		SlangWords.clear();
+		SlangWords = baseList;
 	}
 }

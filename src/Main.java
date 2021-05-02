@@ -8,8 +8,7 @@ public class Main {
 		
 		SlangWordManager swm = new SlangWordManager();
 	
-		swm.ReadFile();		
-		//System.out.println(swm.SlangWords.size());
+		swm.Init();
 		
 		Scanner scanner;
 		int option;
@@ -109,7 +108,8 @@ public class Main {
 					break;
 					
 				case 7:
-					System.out.println("7.");
+					System.out.println("7.Reset ");
+					swm.Reset();
 					break;
 					
 				case 8:
