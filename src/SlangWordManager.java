@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -184,10 +185,26 @@ public class SlangWordManager {
 			return;
 		}
 		
-		SlangWords.remove(existedIndex);
-		WriteFile(slangPath, SlangWords);
-		ReadFile(slangPath, SlangWords);
-		System.out.println("Deleted successfully");	
+		int option;
+		System.out.println("Are you sure to delete this slang?");
+		System.out.println("1. Yes");
+		System.out.println("2. No");
+		scanner = new Scanner(System.in);
+		option = scanner.nextInt();
+		
+		switch(option)
+		{
+			case 1:
+				SlangWords.remove(existedIndex);
+				WriteFile(slangPath, SlangWords);
+				ReadFile(slangPath, SlangWords);
+				System.out.println("Deleted successfully");
+				break;
+				
+			default:
+				
+				break;
+		}			
 	}
 	
 	public SlangWord RandomSlangWord()
