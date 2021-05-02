@@ -120,11 +120,12 @@ public class Main {
 					
 				case 9:
 					System.out.println("9. Guess the definition game");
-					swm.GuessDefinitionGame();
+					swm.Quiz(true);
 					break;
 					
 				case 10:
-					System.out.println("10.");
+					System.out.println("10. Guess the slang word game");
+					swm.Quiz(false);
 					break;
 					
 				case 11:

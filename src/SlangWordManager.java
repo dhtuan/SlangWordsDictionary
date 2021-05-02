@@ -176,7 +176,7 @@ public class SlangWordManager {
 		return SlangWords.get(r.nextInt(SlangWords.size()));
 	}
 	
-	public void GuessDefinitionGame()
+	public void Quiz(boolean guessDefinition)
 	{
 		int choose;
 		SlangWord question = RandomSlangWord();
@@ -191,16 +191,27 @@ public class SlangWordManager {
 		
 		Collections.shuffle(answers);
 		
-		System.out.println("Slang: " + question.slang + "?\n");
+		String quiz = guessDefinition ? "Slang: " + question.slang + "?\n" : "Definition: " + question.definition + "?\n";
+		System.out.println(quiz);
 		
 		for(int i = 0; i < answers.size(); i++)
 		{
-			System.out.println((i+1) + ". " + answers.get(i).definition);
+			if(guessDefinition)
+			{
+				System.out.println((i+1) + ". " + answers.get(i).definition);
+			}
+			else
+			{
+				System.out.println((i+1) + ". " + answers.get(i).slang);
+			}
 		}
 		
 		System.out.println("\nAnswer: ");
 		scanner = new Scanner(System.in);
 		choose = scanner.nextInt();
+		
+		if(choose < 1) choose = 1;
+		if(choose > 4) choose = 4;
 		
 		if(answers.get(choose - 1).equals(question))
 		{
